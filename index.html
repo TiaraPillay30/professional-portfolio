@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiara Pillay — Data Scientist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose: #b5617a;
+  --rose-deep: #9c4d66;
+  --rose-light: #e8c4ce;
+  --rose-pale: #f7eef1;
+  --mauve: #8a546a;
+  --mauve-dark: #5c3349;
+  --mauve-deeper: #3d2030;
+  --gold: #c9a96e;
+  --gold-light: #e8d5b0;
+  --gold-pale: #f5eedc;
+  --cream: #fdf8f4;
+  --dark: #1e1118;
+  --dark2: #2a1820;
+  --text: #3d2530;
+  --text-muted: #8a6d76;
+  --white: #ffffff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden;}
+
+/* ── NOISE OVERLAY ── */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;opacity:.4;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem 5rem;
+  background:rgba(253,248,244,0.88);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(232,196,206,0.5);
+  transition:padding .3s;
+}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;
+  color:var(--mauve-dark);letter-spacing:.06em;text-decoration:none;
+}
+.nav-links{display:flex;gap:2.5rem;list-style:none;}
+.nav-links a{
+  font-size:.72rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--text-muted);text-decoration:none;transition:color .2s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;
+  background:var(--gold);transform:scaleX(0);transition:transform .3s;transform-origin:left;
+}
+.nav-links a:hover{color:var(--mauve-dark);}
+.nav-links a:hover::after{transform:scaleX(1);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;
+  background:var(--dark);
+}
+.hero-bg-gradient{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 70% at 70% 40%, rgba(181,97,122,.28) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 50% at 20% 80%, rgba(201,169,110,.15) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 60% at 90% 90%, rgba(92,51,73,.4) 0%, transparent 50%);
+}
+.hero-grid-overlay{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(232,196,206,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(232,196,206,.06) 1px, transparent 1px);
+  background-size:60px 60px;
+}
+.hero-content{
+  position:relative;z-index:2;
+  width:100%;max-width:1200px;margin:0 auto;
+  padding:0 5rem;padding-top:90px;
+  display:grid;grid-template-columns:1.1fr .9fr;gap:4rem;align-items:center;
+  min-height:100vh;
+}
+.hero-text{}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:.8rem;
+  font-size:.65rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2rem;
+  opacity:0;animation:fadeUp .8s .1s forwards;
+}
+.eyebrow-line{width:32px;height:1px;background:var(--gold);}
+.hero-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,8vw,7.5rem);font-weight:300;line-height:.95;
+  color:var(--cream);margin-bottom:2rem;
+  opacity:0;animation:fadeUp .9s .25s forwards;
+}
+.hero-name .italic{font-style:italic;color:var(--rose-light);}
+.hero-name .outline{
+  -webkit-text-stroke:1px rgba(232,196,206,.5);
+  color:transparent;
+}
+.hero-descriptor{
+  font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(253,248,244,.4);margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp .9s .4s forwards;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-descriptor::before{content:'';width:20px;height:1px;background:rgba(253,248,244,.3);}
+.hero-tagline{
+  font-size:1.05rem;font-weight:300;line-height:1.85;
+  color:rgba(253,248,244,.6);max-width:440px;margin-bottom:3rem;
+  opacity:0;animation:fadeUp .9s .55s forwards;
+}
+.hero-tagline strong{color:rgba(253,248,244,.9);font-weight:400;}
+.hero-ctas{
+  display:flex;gap:1.2rem;align-items:center;
+  opacity:0;animation:fadeUp .9s .7s forwards;
+}
+.btn-primary{
+  background:var(--rose);color:white;
+  padding:.9rem 2.2rem;border-radius:2px;
+  font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;font-weight:500;
+  transition:background .2s,transform .2s,box-shadow .2s;
+  box-shadow:0 4px 20px rgba(181,97,122,.35);
+}
+.btn-primary:hover{background:var(--rose-deep);transform:translateY(-2px);box-shadow:0 8px 28px rgba(181,97,122,.45);}
+.btn-ghost{
+  color:rgba(253,248,244,.7);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;font-weight:500;
+  border:1px solid rgba(253,248,244,.2);
+  padding:.9rem 2.2rem;border-radius:2px;
+  transition:border-color .2s,color .2s;
+}
+.btn-ghost:hover{border-color:var(--rose-light);color:var(--rose-light);}
+
+/* hero right panel */
+.hero-panel{
+  position:relative;
+  opacity:0;animation:fadeIn 1.2s .5s forwards;
+}
+.hero-card-outer{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(232,196,206,.2);
+  border-radius:6px;
+  padding:2.5rem;
+  position:relative;
+  overflow:hidden;
+  backdrop-filter:blur(10px);
+}
+.hero-card-outer::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg, rgba(181,97,122,.1) 0%, transparent 60%);
+  pointer-events:none;
+}
+.hero-card-glow{
+  position:absolute;top:-60px;right:-60px;
+  width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle, rgba(201,169,110,.2) 0%, transparent 70%);
+  pointer-events:none;
+}
+.avatar-wrap{
+  width:80px;height:80px;border-radius:50%;
+  background:linear-gradient(135deg, var(--rose) 0%, var(--mauve-dark) 100%);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.5rem;position:relative;
+}
+.avatar-wrap::after{
+  content:'';position:absolute;inset:-5px;border-radius:50%;
+  border:1px dashed rgba(201,169,110,.5);
+  animation:spin 18s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.avatar-initials{
+  font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:600;
+  color:white;
+}
+.hc-name{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;
+  color:var(--cream);margin-bottom:.2rem;
+}
+.hc-role{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:2rem;}
+.hc-divider{height:1px;background:linear-gradient(to right, rgba(232,196,206,.3), transparent);margin-bottom:1.8rem;}
+.hc-row{display:flex;align-items:center;gap:.8rem;margin-bottom:.9rem;}
+.hc-dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0;}
+.hc-label{font-size:.72rem;color:rgba(253,248,244,.5);letter-spacing:.05em;width:80px;flex-shrink:0;}
+.hc-val{font-size:.78rem;color:rgba(253,248,244,.85);font-weight:400;}
+.hc-badges{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid rgba(232,196,206,.15);}
+.hc-badge{
+  font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.25rem .7rem;border-radius:2px;
+  background:rgba(181,97,122,.15);color:var(--rose-light);
+  border:1px solid rgba(181,97,122,.25);
+}
+
+/* scroll indicator */
+.scroll-hint{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:0;animation:fadeIn 1s 1.5s forwards;
+  z-index:2;
+}
+.scroll-hint span{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(253,248,244,.3);}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom, rgba(201,169,110,.5), transparent);animation:scrollPulse 2s ease-in-out infinite;}
+@keyframes scrollPulse{0%,100%{opacity:.3;transform:scaleY(1);}50%{opacity:1;transform:scaleY(1.3);}}
+
+/* floating numbers */
+.hero-num{
+  position:absolute;font-family:'Cormorant Garamond',serif;font-weight:300;
+  color:rgba(232,196,206,.05);pointer-events:none;user-select:none;
+}
+.hero-num-1{font-size:18rem;top:-2rem;right:-3rem;line-height:1;}
+.hero-num-2{font-size:8rem;bottom:3rem;left:2rem;line-height:1;}
+
+/* ── MARQUEE ── */
+.marquee-wrap{
+  background:var(--rose);
+  padding:.65rem 0;overflow:hidden;
+  border-top:1px solid var(--rose-deep);
+  border-bottom:1px solid var(--rose-deep);
+}
+.marquee-track{
+  display:flex;gap:3rem;white-space:nowrap;
+  animation:marquee 22s linear infinite;
+}
+.marquee-track span{
+  font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.8);
+}
+.marquee-track .dot-sep{color:rgba(255,255,255,.4);}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── ABOUT ── */
+#about{
+  padding:8rem 5rem;background:var(--cream);
+  display:grid;grid-template-columns:1fr 1fr;gap:7rem;align-items:center;
+  max-width:1200px;margin:0 auto;
+}
+#about-wrap{background:var(--cream);}
+.section-kicker{
+  font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);
+  margin-bottom:.8rem;display:flex;align-items:center;gap:.8rem;
+}
+.section-kicker::before{content:'';width:24px;height:1px;background:var(--gold);}
+.section-heading{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.4rem);font-weight:300;
+  color:var(--mauve-dark);line-height:1.1;margin-bottom:2.5rem;
+}
+.section-heading em{font-style:italic;color:var(--rose);}
+.about-body p{
+  font-size:.95rem;font-weight:300;color:var(--text-muted);line-height:1.95;margin-bottom:1.2rem;
+}
+.about-body p strong{color:var(--mauve-dark);font-weight:500;}
+.about-right{}
+.stats-panel{
+  background:var(--white);border:1px solid var(--rose-light);border-radius:4px;
+  overflow:hidden;margin-bottom:1.5rem;
+}
+.stats-row{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rose-light);}
+.stat-box{background:var(--white);padding:2rem 1.5rem;text-align:center;}
+.stat-n{
+  font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;
+  color:var(--rose);line-height:1;margin-bottom:.3rem;
+}
+.stat-l{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);}
+.quote-block{
+  border-left:2px solid var(--gold);padding-left:1.5rem;
+  font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;
+  color:var(--mauve);line-height:1.7;
+}
+
+/* ── SKILLS ── */
+#skills-wrap{background:var(--mauve-deeper);padding:8rem 0;position:relative;overflow:hidden;}
+#skills-wrap::before{
+  content:'SKILLS';
+  position:absolute;top:50%;left:-2rem;transform:translateY(-50%) rotate(-90deg);
+  font-family:'Cormorant Garamond',serif;font-size:14rem;font-weight:300;
+  color:rgba(255,255,255,.025);letter-spacing:.1em;pointer-events:none;white-space:nowrap;
+}
+#skills-inner{max-width:1200px;margin:0 auto;padding:0 5rem;}
+#skills-inner .section-kicker::before{background:var(--gold);}
+#skills-inner .section-kicker{color:var(--gold);}
+#skills-inner .section-heading{color:var(--cream);}
+#skills-inner .section-heading em{color:var(--rose-light);}
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(232,196,206,.1);}
+.sk-card{
+  background:rgba(255,255,255,.03);padding:2.5rem 2rem;
+  border:none;transition:background .25s;position:relative;overflow:hidden;
+}
+.sk-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right, var(--rose), var(--gold));
+  transform:scaleX(0);transition:transform .35s;transform-origin:left;
+}
+.sk-card:hover{background:rgba(255,255,255,.06);}
+.sk-card:hover::after{transform:scaleX(1);}
+.sk-num{
+  font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:300;
+  color:rgba(232,196,206,.1);line-height:1;margin-bottom:1rem;
+}
+.sk-cat{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.sk-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;
+  color:var(--cream);margin-bottom:1rem;
+}
+.sk-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.sk-tag{
+  background:rgba(181,97,122,.15);color:rgba(232,196,206,.8);
+  font-size:.65rem;padding:.28rem .65rem;border-radius:2px;
+  border:1px solid rgba(181,97,122,.2);letter-spacing:.05em;
+}
+
+/* ── EXPERIENCE ── */
+#exp-wrap{background:var(--cream);padding:8rem 0;}
+#exp-inner{max-width:1200px;margin:0 auto;padding:0 5rem;}
+.exp-layout{display:grid;grid-template-columns:.4fr 1fr;gap:6rem;align-items:start;}
+.exp-left{}
+.exp-right{}
+.timeline{position:relative;}
+.timeline::before{
+  content:'';position:absolute;left:0;top:10px;bottom:0;width:1px;
+  background:linear-gradient(to bottom, var(--rose), var(--gold), rgba(201,169,110,0));
+}
+.tl-item{position:relative;padding-left:2.5rem;padding-bottom:3.5rem;}
+.tl-item:last-child{padding-bottom:0;}
+.tl-pip{
+  position:absolute;left:-.45rem;top:8px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--rose);border:2px solid var(--cream);
+  box-shadow:0 0 0 3px rgba(181,97,122,.25);
+}
+.tl-date{font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:.5rem;}
+.tl-role{
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:400;
+  color:var(--mauve-dark);margin-bottom:.3rem;
+}
+.tl-company{
+  font-size:.72rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--rose);margin-bottom:1rem;
+}
+.tl-desc{font-size:.88rem;font-weight:300;color:var(--text-muted);line-height:1.85;max-width:520px;}
+
+/* ── EDUCATION ── */
+#edu-wrap{background:var(--dark2);padding:8rem 0;position:relative;overflow:hidden;}
+#edu-wrap::after{
+  content:'';position:absolute;top:-100px;right:-100px;
+  width:500px;height:500px;border-radius:50%;
+  background:radial-gradient(circle, rgba(181,97,122,.12) 0%, transparent 70%);pointer-events:none;
+}
+#edu-inner{max-width:1200px;margin:0 auto;padding:0 5rem;}
+#edu-inner .section-kicker{color:var(--gold);}
+#edu-inner .section-kicker::before{background:var(--gold);}
+#edu-inner .section-heading{color:var(--cream);}
+#edu-inner .section-heading em{color:var(--rose-light);}
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.edu-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(232,196,206,.12);
+  border-radius:4px;padding:2.5rem 2rem;position:relative;overflow:hidden;
+  transition:border-color .25s,transform .25s;
+}
+.edu-card:hover{border-color:rgba(181,97,122,.4);transform:translateY(-4px);}
+.edu-card.featured{
+  background:linear-gradient(135deg, rgba(181,97,122,.12) 0%, rgba(92,51,73,.15) 100%);
+  border-color:rgba(181,97,122,.3);
+}
+.edu-yr{
+  font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;
+  color:rgba(232,196,206,.12);line-height:1;margin-bottom:1rem;
+}
+.edu-deg{
+  font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;
+  color:var(--cream);margin-bottom:.4rem;
+}
+.edu-school{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);}
+.edu-badge-pill{
+  display:inline-block;margin-top:1rem;
+  background:var(--rose);color:white;
+  font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.3rem .8rem;border-radius:2px;
+}
+.dux-card{
+  grid-column:1/-1;
+  background:linear-gradient(135deg, rgba(201,169,110,.1) 0%, rgba(181,97,122,.08) 100%);
+  border:1px solid rgba(201,169,110,.25);
+  border-radius:4px;padding:2.5rem;
+  display:flex;align-items:center;gap:4rem;
+}
+.dux-num{
+  font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;
+  color:var(--gold);line-height:1;flex-shrink:0;
+}
+.dux-text{}
+.dux-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;
+  color:var(--cream);margin-bottom:.3rem;
+}
+.dux-sub{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
+.dux-desc{font-size:.88rem;font-weight:300;color:rgba(253,248,244,.55);line-height:1.8;}
+
+/* ── PROJECTS ── */
+#proj-wrap{background:var(--cream);padding:8rem 0;}
+#proj-inner{max-width:1200px;margin:0 auto;padding:0 5rem;}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;}
+.proj-card{
+  background:var(--white);border:1px solid var(--rose-light);border-radius:4px;
+  padding:2.5rem;position:relative;overflow:hidden;
+  transition:border-color .25s,transform .25s,box-shadow .25s;
+}
+.proj-card:hover{
+  border-color:var(--rose);transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(181,97,122,.1);
+}
+.proj-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(to right, var(--rose), var(--gold));
+  transform:scaleX(0);transition:transform .35s;transform-origin:left;
+}
+.proj-card:hover::before{transform:scaleX(1);}
+.proj-card.featured-proj{
+  background:linear-gradient(135deg, var(--rose-pale) 0%, var(--gold-pale) 100%);
+  border-color:var(--gold-light);
+}
+.proj-n{
+  font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;
+  color:var(--rose-light);line-height:1;margin-bottom:.5rem;
+}
+.proj-period{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
+.proj-title{
+  font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;
+  color:var(--mauve-dark);margin-bottom:.9rem;
+}
+.proj-desc{font-size:.85rem;font-weight:300;color:var(--text-muted);line-height:1.85;margin-bottom:1.2rem;}
+.proj-skills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.proj-skill{
+  background:var(--rose-pale);color:var(--mauve);
+  font-size:.62rem;padding:.25rem .65rem;border-radius:2px;
+  letter-spacing:.05em;border:1px solid var(--rose-light);
+}
+.proj-highlight-pill{
+  display:inline-block;margin-bottom:.8rem;
+  background:var(--gold);color:white;
+  font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:.28rem .75rem;border-radius:2px;
+}
+
+/* ── CONTACT ── */
+#contact-wrap{
+  background:var(--dark);padding:0;
+  position:relative;overflow:hidden;
+}
+.contact-top{
+  padding:9rem 5rem 5rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:8rem;align-items:center;
+  max-width:1200px;margin:0 auto;position:relative;z-index:2;
+}
+.contact-glow-1{
+  position:absolute;top:-200px;left:-100px;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle, rgba(181,97,122,.14) 0%, transparent 65%);
+  pointer-events:none;
+}
+.contact-glow-2{
+  position:absolute;bottom:-100px;right:-100px;
+  width:400px;height:400px;border-radius:50%;
+  background:radial-gradient(circle, rgba(201,169,110,.1) 0%, transparent 65%);
+  pointer-events:none;
+}
+.contact-left .section-kicker{color:var(--gold);}
+.contact-left .section-kicker::before{background:var(--gold);}
+.contact-left .section-heading{color:var(--cream);}
+.contact-left .section-heading em{color:var(--rose-light);}
+.contact-tagline{
+  font-size:1rem;font-weight:300;line-height:1.9;
+  color:rgba(253,248,244,.45);margin-bottom:2.5rem;
+}
+.contact-tagline strong{color:rgba(253,248,244,.75);font-weight:400;}
+.contact-availability{
+  display:inline-flex;align-items:center;gap:.7rem;
+  background:rgba(181,97,122,.12);border:1px solid rgba(181,97,122,.25);
+  border-radius:2px;padding:.7rem 1.2rem;
+}
+.avail-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--rose);
+  box-shadow:0 0 0 3px rgba(181,97,122,.25);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(181,97,122,.25);}50%{box-shadow:0 0 0 6px rgba(181,97,122,.1);}}
+.avail-text{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rose-light);}
+
+.contact-right{display:flex;flex-direction:column;gap:1px;background:rgba(232,196,206,.08);border-radius:6px;overflow:hidden;}
+.c-card{
+  display:flex;align-items:center;gap:1.5rem;
+  background:rgba(255,255,255,.025);
+  padding:1.8rem 2rem;text-decoration:none;
+  transition:background .2s;position:relative;overflow:hidden;
+}
+.c-card::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom, var(--rose), var(--gold));
+  transform:scaleY(0);transition:transform .3s;transform-origin:top;
+}
+.c-card:hover{background:rgba(255,255,255,.05);}
+.c-card:hover::after{transform:scaleY(1);}
+.c-card-icon{
+  width:44px;height:44px;border-radius:50%;flex-shrink:0;
+  background:rgba(181,97,122,.12);border:1px solid rgba(181,97,122,.2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;color:var(--rose-light);
+  transition:background .2s,border-color .2s;
+}
+.c-card:hover .c-card-icon{background:rgba(181,97,122,.22);border-color:rgba(181,97,122,.4);}
+.c-card-text{flex:1;}
+.c-card-label{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(253,248,244,.3);margin-bottom:.25rem;}
+.c-card-val{font-size:.9rem;color:rgba(253,248,244,.8);font-weight:300;}
+.c-card-arrow{font-size:1rem;color:rgba(253,248,244,.2);transition:color .2s,transform .2s;}
+.c-card:hover .c-card-arrow{color:var(--rose-light);transform:translateX(4px);}
+
+.contact-divider{
+  max-width:1200px;margin:0 auto;
+  height:1px;background:linear-gradient(to right, transparent, rgba(232,196,206,.12), transparent);
+}
+.contact-bottom{
+  max-width:1200px;margin:0 auto;
+  padding:3rem 5rem;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:2;
+}
+.contact-bottom-quote{
+  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;
+  color:rgba(253,248,244,.2);max-width:500px;line-height:1.7;
+}
+.contact-bottom-initials{
+  font-family:'Cormorant Garamond',serif;font-size:5rem;font-weight:300;
+  color:rgba(253,248,244,.04);line-height:1;flex-shrink:0;
+}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--dark);border-top:1px solid rgba(253,248,244,.06);
+  padding:1.8rem 5rem;display:flex;justify-content:space-between;align-items:center;
+}
+footer p{font-size:.68rem;color:rgba(253,248,244,.25);letter-spacing:.08em;}
+.footer-logo{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:rgba(253,248,244,.3);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:.12s;}
+.reveal-delay-2{transition-delay:.22s;}
+.reveal-delay-3{transition-delay:.32s;}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:var(--rose);border-radius:3px;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:960px){
+  nav{padding:1rem 2rem;}
+  .nav-links{gap:1.5rem;}
+  .hero-content{grid-template-columns:1fr;padding:5rem 2rem 4rem;text-align:center;min-height:auto;padding-top:100px;}
+  .hero-eyebrow{justify-content:center;}
+  .hero-descriptor{justify-content:center;}
+  .hero-tagline{margin:0 auto 2.5rem;}
+  .hero-ctas{justify-content:center;}
+  .hero-panel{margin-top:3rem;}
+  #about{grid-template-columns:1fr;gap:3rem;padding:5rem 2rem;}
+  #skills-inner,#exp-inner,#edu-inner,#proj-inner,#contact-inner{padding:0 2rem;}
+  .skills-grid{grid-template-columns:1fr 1fr;}
+  .exp-layout{grid-template-columns:1fr;}
+  .edu-grid{grid-template-columns:1fr;}
+  .dux-card{flex-direction:column;gap:1rem;}
+  .proj-grid{grid-template-columns:1fr;}
+  .contact-top{grid-template-columns:1fr;gap:3rem;padding:6rem 2rem 3rem;}
+  .contact-bottom{padding:2rem;flex-direction:column;gap:1rem;text-align:center;}
+  .contact-bottom-initials{font-size:3rem;}
+  footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem 2rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">TP</a>
+  <ul class="nav-links">
+    <li><a href="#about-wrap">About</a></li>
+    <li><a href="#skills-wrap">Skills</a></li>
+    <li><a href="#exp-wrap">Experience</a></li>
+    <li><a href="#edu-wrap">Education</a></li>
+    <li><a href="#proj-wrap">Projects</a></li>
+    <li><a href="#contact-wrap">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-gradient"></div>
+  <div class="hero-grid-overlay"></div>
+  <div class="hero-num hero-num-1">TP</div>
+  <div class="hero-num hero-num-2">DS</div>
+
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-eyebrow"><span class="eyebrow-line"></span>Data Scientist · Global Markets</div>
+      <h1 class="hero-name">
+        <span class="outline">Tiara</span><br>
+        <span class="italic">Pillay</span>
+      </h1>
+      <div class="hero-descriptor">Standard Bank Group · Johannesburg</div>
+      <p class="hero-tagline">Building <strong>intelligent AI solutions</strong> at the intersection of machine learning, generative AI, and financial markets. Turning complexity into clarity — one model at a time.</p>
+      <div class="hero-ctas">
+        <a href="#contact-wrap" class="btn-primary">Get in touch</a>
+        <a href="#proj-wrap" class="btn-ghost">View projects</a>
+      </div>
+    </div>
+
+    <div class="hero-panel">
+      <div class="hero-card-outer">
+        <div class="hero-card-glow"></div>
+        <div class="avatar-wrap"><span class="avatar-initials">TP</span></div>
+        <div class="hc-name">Tiara Pillay</div>
+        <div class="hc-role">Data Scientist</div>
+        <div class="hc-divider"></div>
+        <div class="hc-row"><span class="hc-dot"></span><span class="hc-label">Company</span><span class="hc-val">Standard Bank Group</span></div>
+        <div class="hc-row"><span class="hc-dot"></span><span class="hc-label">Location</span><span class="hc-val">Johannesburg, South Africa</span></div>
+        <div class="hc-row"><span class="hc-dot"></span><span class="hc-label">Education</span><span class="hc-val">BDataSci · Stellenbosch</span></div>
+        <div class="hc-row"><span class="hc-dot"></span><span class="hc-label">Status</span><span class="hc-val">Open to opportunities</span></div>
+        <div class="hc-badges">
+          <span class="hc-badge">Machine Learning</span>
+          <span class="hc-badge">Generative AI</span>
+          <span class="hc-badge">NLP</span>
+          <span class="hc-badge">Python</span>
+          <span class="hc-badge">AWS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Machine Learning</span><span class="dot-sep">·</span>
+    <span>Generative AI</span><span class="dot-sep">·</span>
+    <span>RAG Agents</span><span class="dot-sep">·</span>
+    <span>Deep Learning</span><span class="dot-sep">·</span>
+    <span>NLP</span><span class="dot-sep">·</span>
+    <span>Python</span><span class="dot-sep">·</span>
+    <span>AWS SageMaker</span><span class="dot-sep">·</span>
+    <span>TensorFlow</span><span class="dot-sep">·</span>
+    <span>PowerBI</span><span class="dot-sep">·</span>
+    <span>Statistical Learning</span><span class="dot-sep">·</span>
+    <span>Credit Risk</span><span class="dot-sep">·</span>
+    <span>Data Science</span><span class="dot-sep">·</span>
+    <!-- repeat for seamless loop -->
+    <span>Machine Learning</span><span class="dot-sep">·</span>
+    <span>Generative AI</span><span class="dot-sep">·</span>
+    <span>RAG Agents</span><span class="dot-sep">·</span>
+    <span>Deep Learning</span><span class="dot-sep">·</span>
+    <span>NLP</span><span class="dot-sep">·</span>
+    <span>Python</span><span class="dot-sep">·</span>
+    <span>AWS SageMaker</span><span class="dot-sep">·</span>
+    <span>TensorFlow</span><span class="dot-sep">·</span>
+    <span>PowerBI</span><span class="dot-sep">·</span>
+    <span>Statistical Learning</span><span class="dot-sep">·</span>
+    <span>Credit Risk</span><span class="dot-sep">·</span>
+    <span>Data Science</span><span class="dot-sep">·</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="about-wrap">
+<section id="about">
+  <div class="about-text reveal">
+    <div class="section-kicker">About me</div>
+    <h2 class="section-heading">Data with a <em>human</em> touch</h2>
+    <div class="about-body">
+      <p>I'm a Data Scientist with hands-on industry experience delivering impactful, data-driven solutions across machine learning, generative AI, and data analytics. Currently at <strong>Standard Bank Group's Global Markets</strong> division, I build AI solutions that enhance the capabilities of traders and business stakeholders on the trading floor.</p>
+      <p>I hold a <strong>Bachelor of Data Science in Statistical Learning</strong> from Stellenbosch University and have a deep passion for making complex data accessible — whether that's through a predictive model, a conversational AI agent, or a well-crafted visualisation.</p>
+      <p>I'm highly adaptable, genuinely collaborative, and someone who loves the craft of turning raw complexity into clear, actionable insight.</p>
+    </div>
+  </div>
+  <div class="about-right reveal reveal-delay-1">
+    <div class="stats-panel">
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-n">5+</div><div class="stat-l">Languages</div></div>
+        <div class="stat-box"><div class="stat-n">5</div><div class="stat-l">Projects</div></div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box"><div class="stat-n">92%</div><div class="stat-l">Matric Average</div></div>
+        <div class="stat-box"><div class="stat-n">1.5yr</div><div class="stat-l">Industry Exp.</div></div>
+      </div>
+    </div>
+    <div class="quote-block">
+      "I leave every experience more curious, more capable, and more committed to applying data science where it matters most."
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- SKILLS -->
+<div id="skills-wrap">
+  <div id="skills-inner">
+    <div class="reveal">
+      <div class="section-kicker">What I work with</div>
+      <h2 class="section-heading" style="margin-bottom:3rem;">Skills &amp; <em>expertise</em></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="sk-card reveal">
+        <div class="sk-num">01</div>
+        <div class="sk-cat">Languages</div>
+        <div class="sk-title">Programming</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Python</span><span class="sk-tag">R</span><span class="sk-tag">Java</span><span class="sk-tag">SAS</span><span class="sk-tag">Statistica</span><span class="sk-tag">SQL</span>
+        </div>
+      </div>
+      <div class="sk-card reveal reveal-delay-1">
+        <div class="sk-num">02</div>
+        <div class="sk-cat">AI &amp; ML</div>
+        <div class="sk-title">Machine Learning</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Supervised</span><span class="sk-tag">Unsupervised</span><span class="sk-tag">NLP</span><span class="sk-tag">Deep Learning</span><span class="sk-tag">Classification</span>
+        </div>
+      </div>
+      <div class="sk-card reveal reveal-delay-2">
+        <div class="sk-num">03</div>
+        <div class="sk-cat">Cutting edge</div>
+        <div class="sk-title">Generative AI</div>
+        <div class="sk-tags">
+          <span class="sk-tag">RAG-Based Agents</span><span class="sk-tag">LLMs</span>
+        </div>
+      </div>
+      <div class="sk-card reveal">
+        <div class="sk-num">04</div>
+        <div class="sk-cat">Visualisation</div>
+        <div class="sk-title">Data Visualisation</div>
+        <div class="sk-tags">
+          <span class="sk-tag">Matplotlib</span><span class="sk-tag">Seaborn</span><span class="sk-tag">PowerBI</span>
+        </div>
+      </div>
+      <div class="sk-card reveal reveal-delay-1">
+        <div class="sk-num">05</div>
+        <div class="sk-cat">Infrastructure</div>
+        <div class="sk-title">Cloud &amp; Big Data</div>
+        <div class="sk-tags">
+          <span class="sk-tag">AWS</span><span class="sk-tag">SageMaker Studio</span><span class="sk-tag">Hadoop</span>
+        </div>
+      </div>
+      <div class="sk-card reveal reveal-delay-2">
+        <div class="sk-num">06</div>
+        <div class="sk-cat">Frameworks</div>
+        <div class="sk-title">Deep Learning</div>
+        <div class="sk-tags">
+          <span class="sk-tag">TensorFlow</span><span class="sk-tag">Keras</span><span class="sk-tag">CNN</span><span class="sk-tag">ANOVA</span><span class="sk-tag">Regression</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<div id="exp-wrap">
+  <div id="exp-inner" style="padding-top:8rem;padding-bottom:8rem;">
+    <div class="exp-layout">
+      <div class="exp-left reveal">
+        <div class="section-kicker">Where I've worked</div>
+        <h2 class="section-heading">Work <em>experience</em></h2>
+        <p style="font-size:.88rem;font-weight:300;color:var(--text-muted);line-height:1.85;margin-top:1rem;">Over a year and a half at Standard Bank Group, growing from graduate trainee to full data scientist in one of Africa's leading financial institutions.</p>
+      </div>
+      <div class="exp-right reveal reveal-delay-1">
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-pip"></div>
+            <div class="tl-date">April 2026 — Present · 3 months</div>
+            <div class="tl-role">Data Scientist</div>
+            <div class="tl-company">Standard Bank Group · Global Markets · On-site</div>
+            <p class="tl-desc">Developing and deploying AI solutions that enhance the capabilities of traders and business stakeholders on the trading floor. My work sits at the intersection of advanced machine learning, financial data, and real-time decision support — building tools that make complex market intelligence accessible and actionable for those who need it most.</p>
+          </div>
+          <div class="tl-item">
+            <div class="tl-pip"></div>
+            <div class="tl-date">February 2025 — May 2026 · 1 year 4 months</div>
+            <div class="tl-role">Data Science Graduate Trainee</div>
+            <div class="tl-company">Standard Bank Group · Hybrid</div>
+            <p class="tl-desc">Completed an intensive graduate programme rotating across data science teams, building hands-on experience with real-world datasets, developing predictive models, and contributing to AI-driven projects. Culminated in the capstone presentation of the BizFlex Origination Scorecard Model redevelopment to fellow graduates and senior executives at the Data Science Mastery Programme Graduation and Showcase.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION -->
+<div id="edu-wrap">
+  <div id="edu-inner" style="padding-top:8rem;padding-bottom:8rem;">
+    <div class="reveal">
+      <div class="section-kicker">Academic background</div>
+      <h2 class="section-heading" style="margin-bottom:3rem;">Education &amp; <em>achievements</em></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-yr">2024</div>
+        <div class="edu-deg">Bachelor of Data Science (Statistical Learning)</div>
+        <div class="edu-school">Stellenbosch University · 2021–2024</div>
+      </div>
+      <div class="edu-card reveal reveal-delay-1">
+        <div class="edu-yr">2020</div>
+        <div class="edu-deg">National Senior Certificate</div>
+        <div class="edu-school">Northlands Girls High School · 2016–2020</div>
+        <div class="edu-badge-pill">Dux 2020</div>
+      </div>
+      <div class="edu-card featured reveal reveal-delay-2">
+        <div class="edu-yr" style="color:rgba(201,169,110,.3);">92%</div>
+        <div class="edu-deg">Top Achiever</div>
+        <div class="edu-school" style="margin-bottom:.6rem;">Matric Average · Northlands Girls High School</div>
+        <p style="font-size:.8rem;font-weight:300;color:rgba(253,248,244,.5);line-height:1.7;">Graduated as the Dux student with a 92% average — a foundation of academic excellence that has driven every stage of my career.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<div id="proj-wrap">
+  <div id="proj-inner" style="padding-top:8rem;padding-bottom:8rem;">
+    <div class="reveal">
+      <div class="section-kicker">Selected work</div>
+      <h2 class="section-heading" style="margin-bottom:3rem;">Projects &amp; <em>research</em></h2>
+    </div>
+    <div class="proj-grid">
+
+      <div class="proj-card featured-proj reveal">
+        <div class="proj-highlight-pill">Capstone · Industry</div>
+        <div class="proj-n">01</div>
+        <div class="proj-period">Standard Bank · 2025</div>
+        <div class="proj-title">BizFlex Origination Scorecard Model Redevelopment</div>
+        <p class="proj-desc">Explored how machine learning techniques could meaningfully enhance the assessment of customer creditworthiness, bridging the gap between advanced analytics and real business impact. Presented the results to fellow graduates and senior executives at the Data Science Mastery Programme Graduation and Showcase.</p>
+        <div class="proj-skills">
+          <span class="proj-skill">Credit Risk</span><span class="proj-skill">Machine Learning</span><span class="proj-skill">Scorecard Modelling</span><span class="proj-skill">Analytics</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal reveal-delay-1">
+        <div class="proj-n">02</div>
+        <div class="proj-period">Standard Bank · Rotation 2 · 2025</div>
+        <div class="proj-title">Financial News RAG-Based Agent</div>
+        <p class="proj-desc">Built a Retrieval-Augmented Generation agent designed to process and surface insights from financial news in real time. The agent enables business stakeholders to query market-relevant information conversationally, reducing the time spent manually scanning sources.</p>
+        <div class="proj-skills">
+          <span class="proj-skill">Generative AI</span><span class="proj-skill">RAG</span><span class="proj-skill">LLMs</span><span class="proj-skill">NLP</span><span class="proj-skill">Python</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-n">03</div>
+        <div class="proj-period">Stellenbosch University · Sep–Oct 2023</div>
+        <div class="proj-title">Histopathology Image Classification &amp; Captioning</div>
+        <p class="proj-desc">Using stomach cancer histopathology images, developed a deep learning model to classify images across eight severity levels and automatically generate a descriptive caption for each classification. Combined computer vision with natural language generation in a single end-to-end pipeline.</p>
+        <div class="proj-skills">
+          <span class="proj-skill">Deep Learning</span><span class="proj-skill">CNN</span><span class="proj-skill">Computer Vision</span><span class="proj-skill">NLP</span><span class="proj-skill">Keras</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal reveal-delay-1">
+        <div class="proj-n">04</div>
+        <div class="proj-period">Stellenbosch University · Apr–May 2023</div>
+        <div class="proj-title">Fashion Outlier Detection &amp; Clustering</div>
+        <p class="proj-desc">Using a subset of the Fashion MNIST dataset, applied dimensionality reduction techniques alongside clustering algorithms to detect and surface outliers in the data. Collaborated with a teammate to compare multiple unsupervised approaches and evaluate their effectiveness on high-dimensional image data.</p>
+        <div class="proj-skills">
+          <span class="proj-skill">Cluster Analysis</span><span class="proj-skill">Dimension Reduction</span><span class="proj-skill">Unsupervised ML</span><span class="proj-skill">Python</span>
+        </div>
+      </div>
+
+      <div class="proj-card reveal" style="grid-column:1/-1;display:grid;grid-template-columns:auto 1fr;gap:2rem;align-items:start;">
+        <div class="proj-n" style="font-size:3rem;margin-bottom:0;">05</div>
+        <div>
+          <div class="proj-period">Stellenbosch University · Mar–Apr 2023</div>
+          <div class="proj-title">Fetal Health Classification</div>
+          <p class="proj-desc">Using cardiotocography data sourced from Kaggle, performed comprehensive Exploratory Data Analysis — including visualisation, cleaning, and preprocessing — to build a classification model capable of predicting fetal health status. Worked alongside a teammate to evaluate and compare multiple classification approaches.</p>
+          <div class="proj-skills">
+            <span class="proj-skill">Data Visualisation</span><span class="proj-skill">Classification</span><span class="proj-skill">EDA</span><span class="proj-skill">Preprocessing</span><span class="proj-skill">R</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact-wrap">
+  <div class="contact-glow-1"></div>
+  <div class="contact-glow-2"></div>
+
+  <div class="contact-top">
+    <div class="contact-left reveal">
+      <div class="section-kicker">Let's connect</div>
+      <h2 class="section-heading">Say <em>hello</em></h2>
+      <p class="contact-tagline">Whether you're a recruiter, a collaborator, or just curious about what I do — I'd <strong>genuinely love to hear from you.</strong> Good conversations lead to great things.</p>
+      <div class="contact-availability">
+        <span class="avail-dot"></span>
+        <span class="avail-text">Open to new opportunities</span>
+      </div>
+    </div>
+
+    <div class="contact-right reveal reveal-delay-1">
+      <a href="mailto:tiara.pillay09@icloud.com" class="c-card">
+        <div class="c-card-icon">✉</div>
+        <div class="c-card-text">
+          <div class="c-card-label">Email</div>
+          <div class="c-card-val">tiara.pillay09@icloud.com</div>
+        </div>
+        <span class="c-card-arrow">→</span>
+      </a>
+      <a href="tel:0843819534" class="c-card">
+        <div class="c-card-icon">☎</div>
+        <div class="c-card-text">
+          <div class="c-card-label">Phone</div>
+          <div class="c-card-val">084 381 9534</div>
+        </div>
+        <span class="c-card-arrow">→</span>
+      </a>
+      <a href="https://www.linkedin.com/in/tiara-pillay-28a443238/" target="_blank" class="c-card">
+        <div class="c-card-icon" style="font-size:.75rem;font-weight:600;letter-spacing:0;">in</div>
+        <div class="c-card-text">
+          <div class="c-card-label">LinkedIn</div>
+          <div class="c-card-val">Tiara Pillay</div>
+        </div>
+        <span class="c-card-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="contact-divider"></div>
+
+  <div class="contact-bottom reveal">
+    <p class="contact-bottom-quote">"The problems worth solving are still out there, and I am ready for them."</p>
+    <div class="contact-bottom-initials">TP</div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Tiara Pillay. All rights reserved.</p>
+  <div class="footer-logo">TP</div>
+  <p>Johannesburg, South Africa</p>
+</footer>
+
+<script>
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); }
+  });
+}, {threshold: 0.08});
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
